@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>FlexDesk</title>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cantarell:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+
+        <header class="app-name">
+            <h1><img src="./images/AppLogo.png" alt="App's logo" /> FlexDesk</h1>
+        </header>
+
+        <main class="tagline">
+            <div id="hero-text">
+                <h2>Feel better at your <span>desk.</span></h2>
+                <h3>" Quick stretch routines for the desk workers "</h3>
+            </div>
+            
+            <div class="app-card-container">
+            
+                <div id="setup-view">
+                    <div class="input-group-1">
+                        <label for="target-area">Where do you feel tension?</label>
+                        <br />
+                        <select id="target-area">
+                            <option value="eyes">Digital Eye Strain</option>
+                            <option value="neck">Neck & Shoulders</option>
+                            <option value="wrists">Wrists & Hands</option>
+                            <option value="back">Lower Back</option>
+                        </select>
+                    </div>
+            
+                    <div class="input-group-2">
+                        <label>Available Time</label>
+                        <div class="time-toggle">
+                            <button class="time-btn active">2 Min</button>
+                            <button class="time-btn">5 Min</button>
+                        </div>
+                    </div>
+            
+                    <div class="primary-btn"><button id="start-btn">Generate Routine</button></div>
+                </div>
+            
+                <div id="timer-view" class="hidden">
+                    <h2 id="timer-display">02:00</h2>
+                    <p class="perform-text">Perform This:</p>
+
+                    <div class="visual-placeholder">
+                        <img id="routine-visual" src="./images/loading.gif" alt="Stretch animation" class="routine-gif" />
+                    </div>
+                
+                    <h3 id="routine-title">Get Ready...</h3>
+                
+                    <div class="pro-tip-container">
+                        <span class="pro-tip-badge">Pro Tip:</span>
+                        <p id="pro-tip-text"></p>
+                    </div>
+                
+                    <button id="cancel-btn">Cancel Routine</button>
+                </div>
+            </div>
+        </main>
+        <div>
+            <footer class="footer">
+            <i><strong>## Note:</strong> If you feel sharp pain, stop immediately. These stretches are for general relief and do not replace
+            professional medical advice.</p></i>
+            </footer>
+        </div>
+            
+    </div>
+    
+
+    <script src="./app.js"></script>
+</body>
+
+</html>

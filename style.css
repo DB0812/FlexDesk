@@ -1,0 +1,313 @@
+body {
+    background-color: #F9F7F7;
+    margin: 0;
+    padding: 0;
+    font-family: "Cantarell", sans-serif;
+    color: #112D4E;
+}
+
+.app-name > h1 > img{
+    height: 30px;
+    border-radius: 50%;
+}
+/* 1. The Full Page Grid */
+.container {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    /* Row 1 shrinks to banner size, Row 2 takes the rest */
+    min-height: 100vh;
+}
+
+/* 2. The Banner Styling */
+.app-name {
+    background-color: #4372A5;
+    /* Your medium blue accent color */
+    color: #F9F7F7;
+    /* Making the text pop against the blue */
+    padding: 15px 30px;
+
+    box-shadow: 0px 8px 6px -6px rgba(0, 0, 0, 0.2);
+}
+
+.app-name h1 {
+    font-size: 25px;
+    margin: 0;
+    /* Removes default spacing so it sits flush in the banner */
+    font-weight: 700;
+}
+
+/* 3. The Centered Tagline */
+/* 3. The Main Content Area */
+.tagline {
+    display: flex;
+    flex-direction: column;
+    /* Stacks the text and the app card top-to-bottom */
+    align-items: center;
+    /* Keeps everything perfectly centered left-to-right */
+    padding-top: 60px;
+    /* This controls EXACTLY how much space is below the blue banner */
+    padding-bottom: 60px;
+    text-align: center;
+}
+
+.tagline h2 {
+    font-size: 50px;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.tagline h3 {
+    font-weight: 400;
+    margin-bottom: 50px;
+}
+
+.app-card-container {
+    background-color: #FFFFFF; /* Gives the card a solid, physical feel */
+    width: 90%;
+    max-width: 800px; /* Prevents it from stretching too wide */
+    border-radius: 20px;
+    border: 1px solid #E5E7EB; /* A softer, more subtle border */
+    box-shadow: 0 10px 30px rgba(17, 45, 78, 0.08); /* A larger, softer, premium shadow */
+    padding: 40px 50px;
+    box-sizing: border-box;
+    
+    /* A much simpler grid: Two equal columns, and space between them */
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px; 
+}
+
+/* 1. Typography Adjustments */
+.input-group-1 label, 
+.input-group-2 label {
+    font-size: 18px; /* Scaled down for better hierarchy */
+    font-weight: 700;
+    display: block; /* Ensures they sit neatly above the inputs */
+    margin-bottom: 12px;
+}
+
+span{
+    color: #4372A5;
+}
+
+/* 2. The Dropdown Input */
+.input-group-1 > #target-area {
+    height: 50px;
+    width: 100%; /* Makes it fill its half of the card */
+    max-width: 300px;
+    border-radius: 8px; /* Slightly sharper corners look more modern */
+    border: 1px solid #D1D5DB;
+    font-size: 16px;
+    padding: 0 15px;
+    color: #112D4E;
+    background-color: #F9F7F7;
+    font-family: "Cantarell", sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease; /* Smooth hover transition */
+}
+
+.input-group-1 > #target-area:hover {
+    border-color: #4372A5; /* Highlights the border on hover instead of full background change */
+}
+
+/* 3. The Time Buttons */
+.time-toggle {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.input-group-2 button {
+    height: 50px;
+    width: 120px;
+    border-radius: 8px;
+    border: 1px solid #4372A5;
+    font-size: 16px;
+    font-weight: 700;
+    color: #4372A5; /* Blue text */
+    background-color: transparent; /* Clear background */
+    font-family: "Cantarell", sans-serif;
+    transition: all 0.3s ease; /* Smooth animation */
+}
+
+/* Active/Hover states for the small buttons */
+.input-group-2 button.active,
+.input-group-2 button:hover {
+    background-color: #4372A5;
+    color: #F9F7F7;
+    transform: translateY(-2px);
+    cursor: pointer;
+}
+
+/* 4. The Main Generate Button */
+.primary-btn {
+    grid-column: 1 / -1; /* Tells this section to stretch across BOTH columns */
+    margin-top: 20px;
+}
+
+.primary-btn > button {
+    padding: 15px 40px; /* Adds breathing room around the text */
+    border-radius: 8px;
+    border: none; /* Removes the ugly default browser border */
+    font-size: 18px;
+    font-weight: 700;
+    color: #F9F7F7;
+    background-color: #112D4E; /* Using your darkest blue for premium feel. (Change to #7032FF if you prefer the purple!) */
+    font-family: "Cantarell", sans-serif;
+    box-shadow: 0 4px 15px rgba(17, 45, 78, 0.2);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.primary-btn > button:hover {
+    background-color: #4372A5;
+    transform: translateY(-3px); /* Makes the button lift off the page */
+    box-shadow: 0 6px 20px rgba(17, 45, 78, 0.3);
+}
+
+/* --- TIMER VIEW STYLES --- */
+
+/* This is the magic class. Anything with this class completely vanishes */
+.hidden {
+    display: none !important;
+}
+
+#setup-view {
+    /* We make setup-view a grid so your current CSS still works perfectly */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    width: 100%;
+}
+
+#timer-view {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    text-align: center;
+}
+
+#timer-display {
+    font-size: 60px;
+    color: #112D4E;
+    margin: 0;
+}
+
+.visual-placeholder {
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    height: 200px;
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 15px 0;
+    color: #4372A5;
+    font-weight: bold;
+}
+
+/* Styles the new 'Perform This:' text */
+.perform-text {
+    font-size: 18px;
+    color: #6B7280;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+/* Fixes the image overflow issue */
+#routine-visual {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+    /* This forces the image to stay inside its box! */
+    border-radius: 8px;
+}
+
+#cancel-btn {
+    padding: 10px 20px;
+    margin-top: 15px;
+    background: none;
+    border: none;
+    color: #4372A5;
+    font-size: 16px;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/* --- PRO TIP STYLES --- */
+.pro-tip-container {
+    max-width: 85%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.pro-tip-badge {
+    background-color: #DBE2EF;
+    /* A soft, subtle yellow-green matching your image */
+    color: #112D4E;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+#pro-tip-text {
+    margin: 0;
+    font-size: 13px;
+    color: #6B7280;
+    /* A soft grey, similar to a subtle disclaimer */
+    line-height: 1.5;
+    font-weight: 400;
+}
+
+.footer{
+    padding: 40px;
+    display: flex;
+    justify-content: center;
+    background-color: #4372A5;
+    color: #F9F7F7;
+    font-size: 15px;
+}
+
+@media(max-width: 750px) {
+
+    .app-card-container {
+        padding: 25px 25px;
+        max-width: 500px;
+    }
+
+    #setup-view {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .input-group-1 label,
+    .input-group-2 label {
+        font-size: 20px;
+    }
+
+    .tagline h2 {
+        font-size: 35px;
+    }
+
+    .input-group-1>#target-area {
+        width: max-content;
+    }
+
+    #timer-display {
+        font-size: 50px;
+    }
+
+    .primary-btn>button {
+        padding: 10px 30px;
+    }
+}
