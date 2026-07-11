@@ -299,6 +299,10 @@ span{
         font-size: 35px;
     }
 
+    .tagline h2 {
+        font-size: 15px;
+    }
+
     .input-group-1>#target-area {
         width: max-content;
     }
