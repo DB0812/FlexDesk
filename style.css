@@ -435,3 +435,60 @@ body.dark-theme .header-btn {
 body.dark-theme .header-btn:hover {
     background-color: rgba(0, 0, 0, 0.5);
 }
+
+/* --- RESPONSIVE HAMBURGER MENU STYLES --- */
+.hamburger-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: #F9F7F7;
+    font-size: 28px;
+    cursor: pointer;
+    margin-left: auto;
+}
+
+@media(max-width: 750px) {
+    .hamburger-toggle {
+        display: block;
+        /* Shows hamburger only on mobile/tablet */
+    }
+
+    .app-name {
+        position: relative;
+        /* Anchors the absolute dropdown menu */
+    }
+
+    .header-controls {
+        display: none;
+        /* Hidden by default on mobile */
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: #4372A5;
+        flex-direction: column;
+        padding: 15px 20px;
+        gap: 12px;
+        box-shadow: 0px 8px 6px -6px rgba(0, 0, 0, 0.2);
+        box-sizing: border-box;
+        z-index: 100;
+    }
+
+    /* Toggled via JavaScript when hamburger is clicked */
+    .header-controls.open {
+        display: flex;
+    }
+
+    .header-btn {
+        width: 100%;
+        justify-content: center;
+        /* Centers text/icons nicely inside the mobile dropdown */
+    }
+}
+
+@media(max-width: 750px) {
+    body.dark-theme .header-controls {
+        background-color: #1E1E1E;
+        /* Matches dark mode header background */
+    }
+}

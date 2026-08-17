@@ -1,3 +1,18 @@
+// --- Hamburger Menu Elements ---
+const hamburgerBtn = document.getElementById('hamburger-btn');
+const headerControls = document.getElementById('header-controls');
+
+hamburgerBtn.addEventListener('click', () => {
+    headerControls.classList.toggle('open');
+});
+
+// Optional: Close the mobile menu automatically if a user clicks an option
+document.querySelectorAll('.header-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        headerControls.classList.remove('open');
+    });
+});
+
 const heroText = document.getElementById('hero-text');
 const startButton = document.getElementById('start-btn');
 const cancelButton = document.getElementById('cancel-btn');
