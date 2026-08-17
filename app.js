@@ -10,9 +10,61 @@ const targetAreaSelect = document.getElementById('target-area');
 const routineVisual = document.getElementById('routine-visual'); 
 const proTipText = document.getElementById('pro-tip-text');
 
-let countdownInterval; // The memory variable for our timer
+const chimeSound = document.getElementById('chime');
+const themeToggle = document.getElementById('theme-toggle');
+const lifetimeStatsDisplay = document.getElementById('lifetime-stats');
 
-// 1. Time Buttons Toggle
+const statsBtn = document.getElementById('stats-btn');
+const closeStatsBtn = document.getElementById('close-stats-btn');
+const statsView = document.getElementById('stats-view');
+const ctx = document.getElementById('statsChart').getContext('2d');
+let chartInstance;
+
+let countdownInterval; 
+
+window.addEventListener('DOMContentLoaded', () => {
+    const savedArea = localStorage.getItem('flexDesk_targetArea');
+    const savedTime = localStorage.getItem('flexDesk_time');
+    const lifetimeMinutes = localStorage.getItem('flexDesk_lifetimeMinutes') || 0;
+
+    if (savedArea) {
+        targetAreaSelect.value = savedArea;
+    }
+
+    if (savedTime) {
+        timeButtons.forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.innerText === savedTime) {
+                btn.classList.add('active');
+            }
+        });
+    }
+    
+    updateLifetimeDisplay(lifetimeMinutes);
+});
+
+function updateLifetimeDisplay(minutes) {
+    if (lifetimeStatsDisplay) {
+        lifetimeStatsDisplay.innerText = `Lifetime Stretch Time: ${minutes} Minutes`;
+    }
+}
+
+themeToggle.addEventListener('click', function() {
+    document.body.classList.toggle('dark-theme');
+    
+    // Swap both the icon and the text label dynamically for the frosted pill button
+    if (document.body.classList.contains('dark-theme')) {
+        themeToggle.innerHTML = '<span class="icon">☀️</span><span class="btn-text">Light Mode</span>';
+    } else {
+        themeToggle.innerHTML = '<span class="icon">🌙</span><span class="btn-text">Dark Mode</span>';
+    }
+    
+    // If the chart is visible during a theme swap, instantly update the colors
+    if (!statsView.classList.contains('hidden')) {
+        renderChart();
+    }
+});
+
 timeButtons.forEach(button => {
     button.addEventListener('click', function() {
         timeButtons.forEach(btn => btn.classList.remove('active'));
@@ -20,12 +72,8 @@ timeButtons.forEach(button => {
     });
 });
 
-// 2. The Timer Engine (This was missing!)
-// 2. The Timer Engine
 function startTimer(durationInSeconds) {
     let timer = durationInSeconds;
-    
-    // Clear old timers
     clearInterval(countdownInterval); 
 
     countdownInterval = setInterval(function () {
@@ -37,26 +85,40 @@ function startTimer(durationInSeconds) {
 
         timerDisplay.innerText = minutes + ":" + seconds;
 
-        // WHEN THE TIMER HITS ZERO...
         if (--timer < 0) {
-            clearInterval(countdownInterval); // Stop the clock
-            timerDisplay.innerText = "00:00"; // Set text to zero
+            clearInterval(countdownInterval); 
+            timerDisplay.innerText = "00:00"; 
+            chimeSound.play();
 
-            // NEW: Wait 1 second (1000ms), then swap the screens back
+            // Update Lifetime Minutes
+            let addedMinutes = (document.querySelector('.time-btn.active').innerText === '5 Min') ? 5 : 2;
+            let currentLifetime = parseInt(localStorage.getItem('flexDesk_lifetimeMinutes') || 0, 10);
+            currentLifetime += addedMinutes;
+            localStorage.setItem('flexDesk_lifetimeMinutes', currentLifetime);
+            updateLifetimeDisplay(currentLifetime);
+
+            // Update Weekly Array for Chart.js
+            let todayIndex = new Date().getDay(); 
+            let weeklyStats = JSON.parse(localStorage.getItem('flexDesk_weeklyStats')) || [0, 0, 0, 0, 0, 0, 0];
+            weeklyStats[todayIndex] += addedMinutes;
+            localStorage.setItem('flexDesk_weeklyStats', JSON.stringify(weeklyStats));
+
             setTimeout(function() {
                 timerView.classList.add('hidden');
                 setupView.classList.remove('hidden');
-                heroText.classList.remove('hidden'); // Brings the big text back!
+                heroText.classList.remove('hidden'); 
             }, 1000); 
         }
     }, 1000);
 }
 
-// 3. Generate Routine (Merged logic)
 startButton.addEventListener('click', function() {
-    
-    // -- GIF AND TIP SWAP --
     const selectedArea = targetAreaSelect.value;
+    const activeTimeButton = document.querySelector('.time-btn.active');
+    
+    // Save to local storage
+    localStorage.setItem('flexDesk_targetArea', selectedArea);
+    localStorage.setItem('flexDesk_time', activeTimeButton.innerText);
     
     if (selectedArea === 'eyes') {
         routineVisual.src = './images/eyes-stretch.gif';
@@ -75,26 +137,78 @@ startButton.addEventListener('click', function() {
         proTipText.innerText = "Incorporate a seated spinal twist into your routine to help release deep back pain.";
     }
 
-    // -- TIMER START --
-    const activeTimeButton = document.querySelector('.time-btn.active');
     let timeInSeconds = (activeTimeButton.innerText === '5 Min') ? 300 : 120;
-    
     timerDisplay.innerText = (activeTimeButton.innerText === '5 Min') ? "05:00" : "02:00";
     
-    // Fire up the clock!
+    chimeSound.play();
     startTimer(timeInSeconds); 
 
-    // -- VIEW SWAP --
     setupView.classList.add('hidden');
     heroText.classList.add('hidden');
     timerView.classList.remove('hidden');
 });
 
-
-// 4. Cancel Routine
 cancelButton.addEventListener('click', function() {
-    clearInterval(countdownInterval); // Stop the clock
+    clearInterval(countdownInterval); 
     timerView.classList.add('hidden');
+    setupView.classList.remove('hidden');
+    heroText.classList.remove('hidden');
+});
+
+// --- DASHBOARD RENDERING LOGIC ---
+function renderChart() {
+    let weeklyStats = JSON.parse(localStorage.getItem('flexDesk_weeklyStats')) || [0, 0, 0, 0, 0, 0, 0];
+    
+    if (chartInstance) {
+        chartInstance.destroy();
+    }
+
+    const isDark = document.body.classList.contains('dark-theme');
+    const textColor = isDark ? '#E0E0E0' : '#112D4E';
+    const gridColor = isDark ? 'rgba(255, 255, 255, 0.2)' : '#E5E7EB';
+
+    chartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+            datasets: [{
+                label: 'Minutes Stretched',
+                data: weeklyStats,
+                backgroundColor: '#4372A5',
+                borderRadius: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: { 
+                    beginAtZero: true,
+                    grid: { color: gridColor }, 
+                    ticks: { color: textColor, stepSize: 5 }
+                },
+                x: {
+                    grid: { display: false },
+                    ticks: { color: textColor }
+                }
+            },
+            plugins: {
+                legend: { display: false }
+            }
+        }
+    });
+}
+
+statsBtn.addEventListener('click', () => {
+    setupView.classList.add('hidden');
+    timerView.classList.add('hidden');
+    heroText.classList.add('hidden');
+    statsView.classList.remove('hidden');
+    renderChart();
+});
+
+closeStatsBtn.addEventListener('click', () => {
+    statsView.classList.add('hidden');
     setupView.classList.remove('hidden');
     heroText.classList.remove('hidden');
 });

@@ -4,48 +4,81 @@ body {
     padding: 0;
     font-family: "Cantarell", sans-serif;
     color: #112D4E;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.app-name > h1 > img{
-    height: 30px;
-    border-radius: 50%;
-}
-/* 1. The Full Page Grid */
-.container {
-    display: grid;
-    grid-template-rows: auto 1fr;
-    /* Row 1 shrinks to banner size, Row 2 takes the rest */
-    min-height: 100vh;
-}
-
-/* 2. The Banner Styling */
 .app-name {
     background-color: #4372A5;
-    /* Your medium blue accent color */
     color: #F9F7F7;
-    /* Making the text pop against the blue */
     padding: 15px 30px;
-
     box-shadow: 0px 8px 6px -6px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
 }
 
 .app-name h1 {
     font-size: 25px;
     margin: 0;
-    /* Removes default spacing so it sits flush in the banner */
     font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-/* 3. The Centered Tagline */
-/* 3. The Main Content Area */
+.app-name>h1>img {
+    height: 30px;
+    border-radius: 50%;
+}
+
+/* --- HEADER BUTTONS STYLING --- */
+.header-controls {
+    margin-left: auto;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.header-btn {
+    background-color: rgba(255, 255, 255, 0.15);
+    /* Frosted glass effect */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    /* Gives it the pill shape */
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: "Cantarell", sans-serif;
+    color: #F9F7F7;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    /* Space between emoji and text */
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.header-btn:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.btn-text {
+    letter-spacing: 0.5px;
+}
+
+.container {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    min-height: 100vh;
+}
+
 .tagline {
     display: flex;
     flex-direction: column;
-    /* Stacks the text and the app card top-to-bottom */
     align-items: center;
-    /* Keeps everything perfectly centered left-to-right */
     padding-top: 60px;
-    /* This controls EXACTLY how much space is below the blue banner */
     padding-bottom: 60px;
     text-align: center;
 }
@@ -62,40 +95,47 @@ body {
 }
 
 .app-card-container {
-    background-color: #FFFFFF; /* Gives the card a solid, physical feel */
+    background-color: #FFFFFF;
     width: 90%;
-    max-width: 800px; /* Prevents it from stretching too wide */
+    max-width: 800px;
     border-radius: 20px;
-    border: 1px solid #E5E7EB; /* A softer, more subtle border */
-    box-shadow: 0 10px 30px rgba(17, 45, 78, 0.08); /* A larger, softer, premium shadow */
+    border: 1px solid #E5E7EB;
+    box-shadow: 0 10px 30px rgba(17, 45, 78, 0.08);
     padding: 40px 50px;
     box-sizing: border-box;
-    
-    /* A much simpler grid: Two equal columns, and space between them */
     display: grid;
     grid-template-columns: 1fr;
-    gap: 40px; 
+    gap: 40px;
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* 1. Typography Adjustments */
-.input-group-1 label, 
+.input-group-1 label,
 .input-group-2 label {
-    font-size: 18px; /* Scaled down for better hierarchy */
+    font-size: 18px;
     font-weight: 700;
-    display: block; /* Ensures they sit neatly above the inputs */
+    display: block;
     margin-bottom: 12px;
 }
 
-span{
-    color: #4372A5;
+#deskAnimate {
+    animation: desk 1000ms 0ms infinite alternate none;
 }
 
-/* 2. The Dropdown Input */
-.input-group-1 > #target-area {
+@keyframes desk {
+    from {
+        color: #4372a590;
+    }
+
+    to {
+        color: #4372A5;
+    }
+}
+
+.input-group-1>#target-area {
     height: 50px;
-    width: 100%; /* Makes it fill its half of the card */
+    width: 100%;
     max-width: 300px;
-    border-radius: 8px; /* Slightly sharper corners look more modern */
+    border-radius: 8px;
     border: 1px solid #D1D5DB;
     font-size: 16px;
     padding: 0 15px;
@@ -103,14 +143,13 @@ span{
     background-color: #F9F7F7;
     font-family: "Cantarell", sans-serif;
     cursor: pointer;
-    transition: all 0.3s ease; /* Smooth hover transition */
+    transition: all 0.3s ease;
 }
 
-.input-group-1 > #target-area:hover {
-    border-color: #4372A5; /* Highlights the border on hover instead of full background change */
+.input-group-1>#target-area:hover {
+    border-color: #4372A5;
 }
 
-/* 3. The Time Buttons */
 .time-toggle {
     display: flex;
     gap: 15px;
@@ -124,13 +163,12 @@ span{
     border: 1px solid #4372A5;
     font-size: 16px;
     font-weight: 700;
-    color: #4372A5; /* Blue text */
-    background-color: transparent; /* Clear background */
+    color: #4372A5;
+    background-color: transparent;
     font-family: "Cantarell", sans-serif;
-    transition: all 0.3s ease; /* Smooth animation */
+    transition: all 0.3s ease;
 }
 
-/* Active/Hover states for the small buttons */
 .input-group-2 button.active,
 .input-group-2 button:hover {
     background-color: #4372A5;
@@ -139,41 +177,36 @@ span{
     cursor: pointer;
 }
 
-/* 4. The Main Generate Button */
 .primary-btn {
-    grid-column: 1 / -1; /* Tells this section to stretch across BOTH columns */
+    grid-column: 1 / -1;
     margin-top: 20px;
 }
 
-.primary-btn > button {
-    padding: 15px 40px; /* Adds breathing room around the text */
+.primary-btn>button {
+    padding: 15px 40px;
     border-radius: 8px;
-    border: none; /* Removes the ugly default browser border */
+    border: none;
     font-size: 18px;
     font-weight: 700;
     color: #F9F7F7;
-    background-color: #112D4E; /* Using your darkest blue for premium feel. (Change to #7032FF if you prefer the purple!) */
+    background-color: #112D4E;
     font-family: "Cantarell", sans-serif;
     box-shadow: 0 4px 15px rgba(17, 45, 78, 0.2);
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
-.primary-btn > button:hover {
+.primary-btn>button:hover {
     background-color: #4372A5;
-    transform: translateY(-3px); /* Makes the button lift off the page */
+    transform: translateY(-3px);
     box-shadow: 0 6px 20px rgba(17, 45, 78, 0.3);
 }
 
-/* --- TIMER VIEW STYLES --- */
-
-/* This is the magic class. Anything with this class completely vanishes */
 .hidden {
     display: none !important;
 }
 
 #setup-view {
-    /* We make setup-view a grid so your current CSS still works perfectly */
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 40px;
@@ -208,7 +241,6 @@ span{
     font-weight: bold;
 }
 
-/* Styles the new 'Perform This:' text */
 .perform-text {
     font-size: 18px;
     color: #6B7280;
@@ -217,12 +249,10 @@ span{
     font-weight: 700;
 }
 
-/* Fixes the image overflow issue */
 #routine-visual {
     height: 100%;
     width: 100%;
     object-fit: contain;
-    /* This forces the image to stay inside its box! */
     border-radius: 8px;
 }
 
@@ -237,7 +267,6 @@ span{
     cursor: pointer;
 }
 
-/* --- PRO TIP STYLES --- */
 .pro-tip-container {
     max-width: 85%;
     text-align: center;
@@ -249,7 +278,6 @@ span{
 
 .pro-tip-badge {
     background-color: #DBE2EF;
-    /* A soft, subtle yellow-green matching your image */
     color: #112D4E;
     font-size: 12px;
     font-weight: 700;
@@ -263,12 +291,26 @@ span{
     margin: 0;
     font-size: 13px;
     color: #6B7280;
-    /* A soft grey, similar to a subtle disclaimer */
     line-height: 1.5;
     font-weight: 400;
 }
 
-.footer{
+/* --- STATS DASHBOARD VIEW --- */
+#stats-view {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.chart-container {
+    position: relative;
+    height: 300px;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.footer {
     padding: 40px;
     display: flex;
     justify-content: center;
@@ -277,8 +319,17 @@ span{
     font-size: 15px;
 }
 
-@media(max-width: 750px) {
+/* --- LIFETIME STATS VISIBILITY FIX --- */
+#lifetime-stats {
+    font-size: 15px;
+    font-weight: 700;
+    color: #F9F7F7;
+    opacity: 0.9;
+    display: block;
+    margin-top: 10px;
+}
 
+@media(max-width: 750px) {
     .app-card-container {
         padding: 25px 25px;
         max-width: 500px;
@@ -299,10 +350,6 @@ span{
         font-size: 35px;
     }
 
-    .tagline h3 {
-        font-size: 15px;
-    }
-
     .input-group-1>#target-area {
         width: max-content;
     }
@@ -314,4 +361,77 @@ span{
     .primary-btn>button {
         padding: 10px 30px;
     }
+}
+
+/* --- DARK MODE OVERRIDES --- */
+body.dark-theme {
+    background-color: #121212;
+    color: #E0E0E0;
+}
+
+body.dark-theme .app-name {
+    background-color: #1E1E1E;
+    box-shadow: 0px 8px 6px -6px rgba(0, 0, 0, 0.8);
+}
+
+body.dark-theme .app-card-container {
+    background-color: #1E1E1E;
+    border-color: #333333;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+}
+
+body.dark-theme .input-group-1>#target-area {
+    background-color: #121212;
+    color: #E0E0E0;
+    border-color: #333333;
+}
+
+body.dark-theme #timer-display {
+    color: #E0E0E0;
+}
+
+body.dark-theme .perform-text,
+body.dark-theme #pro-tip-text {
+    color: #B0B0B0;
+}
+
+body.dark-theme .visual-placeholder {
+    background-color: #121212;
+}
+
+body.dark-theme .pro-tip-badge {
+    background-color: #333333;
+    color: #E0E0E0;
+}
+
+body.dark-theme .footer {
+    background-color: #1E1E1E;
+    color: #B0B0B0;
+}
+
+body.dark-theme .primary-btn>button {
+    background-color: #4372A5;
+}
+
+body.dark-theme .primary-btn>button:hover {
+    background-color: #5B8CC5;
+}
+
+body.dark-theme #stats-view h2 {
+    color: #E0E0E0;
+}
+
+body.dark-theme #lifetime-stats {
+    color: #E0E0E0;
+}
+
+/* Header Buttons Dark Mode */
+body.dark-theme .header-btn {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-color: rgba(255, 255, 255, 0.05);
+    color: #E0E0E0;
+}
+
+body.dark-theme .header-btn:hover {
+    background-color: rgba(0, 0, 0, 0.5);
 }

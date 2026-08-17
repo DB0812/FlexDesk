@@ -8,21 +8,39 @@
     <link rel="stylesheet" href="./style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cantarell:ital,wght@0,400;0,700;1,400;1,700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cantarell:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <!-- NEW: Chart.js Library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-<body>
+<!-- Add the dark-theme class directly to the body -->
+<body class="dark-theme">
     <div class="container">
 
         <header class="app-name">
             <h1><img src="./images/AppLogo.png" alt="App's logo" /> FlexDesk</h1>
+            <div class="header-controls">
+                <button id="stats-btn" class="header-btn">
+                    <span class="icon">
+                        <!-- NEW: SVG Bar Chart Icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bar-chart-line-fill" viewBox="0 0 16 16">  
+                            <path d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1z"/>
+                        </svg>
+                    </span>
+                    <span class="btn-text">Activity</span>
+                </button>
+                <!-- Sets default text for your Dark Mode starting state -->
+                <button id="theme-toggle" class="header-btn">
+                    <span class="icon">☀️</span>
+                    <span class="btn-text">Light Mode</span>
+                </button>
+            </div>
         </header>
 
         <main class="tagline">
             <div id="hero-text">
-                <h2>Feel better at your <span>desk.</span></h2>
-                <h3>"Quick stretch routines for the desk workers"</h3>
+                <h2>Feel better at your <span id="deskAnimate">desk.</span></h2>
+                <h3>" Quick stretch routines for the desk workers "</h3>
             </div>
             
             <div class="app-card-container">
@@ -67,18 +85,31 @@
                 
                     <button id="cancel-btn">Cancel Routine</button>
                 </div>
+
+                <!-- NEW: Stats Dashboard View -->
+                <div id="stats-view" class="hidden">
+                    <h2 style="margin-top: 0;">Weekly Activity</h2>
+                    <div class="chart-container">
+                        <canvas id="statsChart"></canvas>
+                    </div>
+                    <div class="primary-btn"><button id="close-stats-btn">Back to Timer</button></div>
+                </div>
+
             </div>
         </main>
         <div>
             <footer class="footer">
-            <i><strong>## Note:</strong> If you feel sharp pain, stop immediately. These stretches are for general relief and do not replace
-            professional medical advice.</p></i>
+                <div style="text-align: center;">
+                    <i><strong>## Note:</strong> If you feel sharp pain, stop immediately. These stretches are for general relief and do not replace professional medical advice.</i>
+                    <br><br>
+                    <span id="lifetime-stats">Lifetime Stretch Time: 0 Minutes</span>
+                </div>
             </footer>
         </div>
             
     </div>
     
-
+    <audio id="chime" src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3" preload="auto"></audio>
     <script src="./app.js"></script>
 </body>
 
